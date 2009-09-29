@@ -1,0 +1,5 @@
+description = "Simpliest RPC facility"
+requires = "lwt.extra sexplib.syntax camlp4"
+version = "1"
+archive(byte) = "orpc.cma"
+archive(native) = "orpc.cmxa"
