@@ -28,29 +28,16 @@ let read_length fd length =
 (** When we write an ASCII length, use that number of digits (justified with zeros). *)
 let mashall_int_buffer_len = 5
 
-(** (Un)Marshallers for integers used for string lengths. *)
-
-let int_marshaller fd i =
-	let buffer = String.create mashall_int_buffer_len in
-	let rec set_digit offset ii =
-		if offset >= 0 then (
-			buffer.[offset] <- char_of_int((int_of_char '0') + (ii mod 10)) ;
-			set_digit (offset-1) (ii/10)
-		) in
-	set_digit (mashall_int_buffer_len-1) i ;
-	write_length fd buffer
-
-let int_unmarshaller fd =
-	read_length fd mashall_int_buffer_len >>= fun buffer ->
-		Lwt.return (int_of_string buffer)
+(** (Un)Marshallers for strings and S-Expressions. *)
 
 let string_marshaller fd str =
 	let len = String.length str in
-	int_marshaller fd len >>= fun () ->
-	write_length fd str
+	let header = Printf.sprintf "%0*d" mashall_int_buffer_len len in
+	write_length fd (header^str)
 
 let string_unmarshaller fd =
-	int_unmarshaller fd >>= read_length fd
+	read_length fd mashall_int_buffer_len >>= fun buffer ->
+		read_length fd (int_of_string buffer)
 
 let sexp_marshaller fd sexp = string_marshaller fd (Sexplib.Sexp.to_string sexp)
 let sexp_unmarshaller fd = string_unmarshaller fd >>= fun str ->
