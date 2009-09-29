@@ -15,7 +15,7 @@ XARCHIVE = $(NAME).cmxa
 
 REQUIRES = lwt.extra sexplib.syntax camlp4
 
-.PHONY: all clean install uninstall doc
+.PHONY: all clean install uninstall reinstall doc
 
 all: $(ARCHIVE)
 opt: $(XARCHIVE)
@@ -35,6 +35,8 @@ install: all
 
 uninstall:
 	ocamlfind remove $(NAME)
+
+reinstall: uninstall install
 
 html:
 	mkdir -p $@
