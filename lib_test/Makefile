@@ -18,10 +18,10 @@ all: $(PROGRAM)
 opt: $(XPROGRAM)
 
 $(PROGRAM): $(OBJECTS)
-	$(OCAMLC)   -o $(PROGRAM)  -package "$(REQUIRES)" -linkpkg $(OCAMLFLAGS) $(OBJECTS)
+	$(OCAMLC)   -o $@ -package "$(REQUIRES)" -linkpkg $(OCAMLFLAGS) $^
 
 $(XPROGRAM): $(XOBJECTS)
-	$(OCAMLOPT) -o $(XPROGRAM) -package "$(REQUIRES)" -linkpkg $(OCAMLOPTFLAGS) $(XOBJECTS)
+	$(OCAMLOPT) -o $@ -package "$(REQUIRES)" -linkpkg $(OCAMLOPTFLAGS) $^
 
 # Common rules
 .SUFFIXES: .ml .mli .cmo .cmi .cmx
@@ -41,7 +41,6 @@ clean:
 
 # Dependencies
 .depend: *.ml
-	$(OCAMLDEP) -package "$(REQUIRES)" -syntax camlp4o *.ml > .depend
+	$(OCAMLDEP) -package "$(REQUIRES)" -syntax camlp4o $^ > $@
 
 include .depend
-

@@ -21,13 +21,10 @@ all: $(ARCHIVE)
 opt: $(XARCHIVE)
 
 $(ARCHIVE): $(OBJECTS)
-	$(OCAMLC)   -a -o $(ARCHIVE)  -package "$(REQUIRES)" -linkpkg $(OCAMLFLAGS) $(OBJECTS)
+	$(OCAMLC)   -a -o $@ -package "$(REQUIRES)" -linkpkg $(OCAMLFLAGS) $^
 
 $(XARCHIVE): $(XOBJECTS)
-	$(OCAMLOPT) -a -o $(XARCHIVE) -package "$(REQUIRES)" $(OCAMLOPTFLAGS) $(XOBJECTS)
-
-orpc_test: orpc.cmx orpc_test.cmx
-	$(OCAMLOPT) -package "$(REQUIRES)" -syntax camlp4o -thread -linkpkg $(OCAMLOPTFLAGS) -o $@ $^
+	$(OCAMLOPT) -a -o $@ -package "$(REQUIRES)" $(OCAMLOPTFLAGS) $^
 
 install: all
 	if test -f $(XARCHIVE) ; then extra="$(XARCHIVE) "`basename $(XARCHIVE) .cmxa`.a ; fi ; \
@@ -63,7 +60,6 @@ clean:
 
 # Dependencies
 .depend: *.ml *.mli
-	$(OCAMLDEP) -package "$(REQUIRES)" -syntax camlp4o *.mli *.ml > .depend
+	$(OCAMLDEP) -package "$(REQUIRES)" -syntax camlp4o $^ > $@
 
 include .depend
-
