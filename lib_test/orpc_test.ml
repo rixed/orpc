@@ -5,7 +5,7 @@ TYPE_CONV_PATH "Orpc_test"
  * if it found the letter 'O' in your string.
  *)
 
-let (>>=) = Lwt.bind
+let (>>=) = Lwt.(>>=)
 
 type wc_in = GET_LENGTH of string | HAS_CHAR of (char * string) with sexp
 type wc_out = GET_LENGTH_RES of int | HAS_CHAR_RES of bool with sexp

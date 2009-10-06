@@ -1,4 +1,4 @@
-let (>>=) = Lwt.bind
+let (>>=) = Lwt.(>>=)
 
 (** (Un)Marshallers *)
 
