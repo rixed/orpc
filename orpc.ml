@@ -43,6 +43,10 @@ let sexp_marshaller fd sexp = string_marshaller fd (Sexplib.Sexp.to_string sexp)
 let sexp_unmarshaller fd = string_unmarshaller fd >>= fun str ->
 	Lwt.return (Sexplib.Sexp.of_string str)
 
+let unit_marshaller fd () = string_marshaller fd ""
+let unit_unmarshaller fd = string_unmarshaller fd >>= fun str ->
+	Lwt.return (assert (String.length str = 0))
+
 (* Client *)
 
 type ('a, 'b) connection = {
