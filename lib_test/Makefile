@@ -12,7 +12,7 @@ XPROGRAM = orpc_test.opt
 
 REQUIRES = orpc sexplib.syntax camlp4
 
-.PHONY: all clean install uninstall
+.PHONY: all clean
 
 all: $(PROGRAM)
 opt: $(XPROGRAM)
