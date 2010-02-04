@@ -10,6 +10,9 @@ OCAMLFLAGS    = -w Ae -g
 OBJECTS  = orpc.cmo
 XOBJECTS = orpc.cmx
 
+# Force compilation of cmi first
+orpc.cmo orpc.cmx: orpc.cmi
+
 ARCHIVE  = $(NAME).cma
 XARCHIVE = $(NAME).cmxa
 
