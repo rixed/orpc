@@ -43,7 +43,7 @@ val string_unmarshaller : string unmarshaller
 val sexp_marshaller : Sexplib.Sexp.t marshaller
 val sexp_unmarshaller : Sexplib.Sexp.t unmarshaller
 
-(** These do-nothing (un)marshallers can be usefull as well. *)
+(** These do-nothing (un)marshallers can be useful as well. *)
 
 val unit_marshaller : unit marshaller
 val unit_unmarshaller : unit unmarshaller
